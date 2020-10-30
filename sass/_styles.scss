@@ -28,9 +28,11 @@ body {
 
     h2 {
         color: #fff;
+        margin: .4rem 0;
     }
 
     p {
+        margin: 0;
         color: #eaeaea;
     }
 
@@ -41,6 +43,30 @@ body {
         padding: 1rem 2rem;
         cursor: pointer;
     }
+}
+
+#popupLetter {
+    display: inline-block;
+    position: fixed;
+    bottom: -6.5rem;
+    left: 50vw;
+    transform: translate(-50%, 0);
+    background: rgb(0, 143, 187);
+    padding: 1rem 3rem;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    transition: bottom .4s ease-out;
+}
+
+.wrong-letters {
+    margin-top: 2rem;
+    font-weight: bold;
+}
+
+#wrong {
+    text-align: center;
+    font-weight: 400;
+    font-size: 2rem;
 }
 
 .container {

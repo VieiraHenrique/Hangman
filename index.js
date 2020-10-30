@@ -5,11 +5,13 @@ const c = canvas.getContext('2d');
 const popupContainer = document.getElementById('popup-container');
 const popupContent = document.getElementById('popup-content');
 const word = document.getElementById('word');
+const popupLetter = document.getElementById('popupLetter');
+const wrong = document.getElementById('wrong');
 
 
 // DEFINE CANVAS PROPERTIES
 
-canvas.width = 600;
+canvas.width = 250;
 canvas.height = 360;
 
 // FUNCTIONS TO DRAW PATHS
@@ -98,33 +100,37 @@ let wrongLetters = [];
 
 // MAIN GAME
 
+    // DISPLAY WORD ON SCREEN AND CHECK IF WIN
 function displayWord(){
     word.innerHTML = `
     ${selectedWord.split('').map((letter)=>{
         return `<span class="letter"> ${correctLetters.includes(letter)? letter:' '} </span>`
     }).join('')}
 `
-    const innerWord = word.innerText;
+    const innerWord = word.innerText.replace(/\n/g, '');
+    console.log(innerWord)
+
     if (innerWord === selectedWord) {
         showPopupWin();
     }
 }
 
+// UPDATES WRONG LETTERS ARRAY AND CHECK IF LOST
 function displayWrong(){
     for (let i = 0 ; i < wrongLetters.length ; i++){
         funcs[i]();
+        displayWrongLetters()
         if (wrongLetters.length === funcs.length) {
             showPopupLost()
         }
     }
 }
 
-
 drawHang();
 displayWord();
 
 
-//
+// SHOW POPUP IF LOST AND RESTART GAME
 function showPopupLost(){
     popupContainer.style.display = 'flex'
     popupContent.querySelector('h2').innerText = 'You lost !';
@@ -140,6 +146,8 @@ function showPopupLost(){
         drawHang();
     })
 }
+
+// SHOW POPUP IF WIN AND RESTART GAME
 function showPopupWin(){
     popupContainer.style.display = 'flex'
     popupContent.querySelector('h2').innerText = 'You win !';
@@ -156,15 +164,29 @@ function showPopupWin(){
     })
 }
 
+// SHOW POPUP IF DUPLICATE LETTER
+function showPopupLetter(){
+    popupLetter.style.bottom = 0;
+    setTimeout(()=>{
+        popupLetter.style.bottom = '-6.5rem'
+    },1000)
+}
+
+// SHOW WRONG LETTERS
+function displayWrongLetters(){
+    wrong.innerHTML = wrongLetters;
+}
+
 // EVENT LISTENER FOR KEYDOWN
 
 window.addEventListener('keydown',(e)=>{
     if (e.keyCode >= 65 && e.keyCode<= 90) {
-        if(selectedWord.includes(e.key)) {
+         if (wrongLetters.includes(e.key) || correctLetters.includes(e.key)) {
+            showPopupLetter()
+        } else if(selectedWord.includes(e.key)) {
             correctLetters.push(e.key);
-        } else {
+        }else {
             wrongLetters.push(e.key);
-
         }
     }
 

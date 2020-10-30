@@ -19,10 +19,22 @@
         </div>
     </div>
 
+    <div id="popupLetter">
+        <p>You already tried this letter</p>
+    </div>
+
     <div class="container">
         <h2>Hangman</h2>
         <p>Enter letters to find the word. Each time you're wrong, our little friend will be closer to death !</p>
-        <canvas id="canvas"></canvas>
+        <div class="center">
+            <canvas id="canvas"></canvas>
+            <div>
+                <div class="wrong-letters">
+                    <p>Wrong letters : </p>
+                    <div id="wrong"></div>
+                </div>
+            </div>
+        </div>
         <div id="word">
         </div>
     </div>
